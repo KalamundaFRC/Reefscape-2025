@@ -25,10 +25,10 @@ DifferentialDrive jeffbase;
 
 
 public jeffsdrivebase(){
-    backleft = new WPI_VictorSPX(1);
+    backleft = new WPI_VictorSPX(3);
     backright = new WPI_VictorSPX(2);
-    frontleft = new WPI_TalonSRX(3);
-    frontright = new WPI_TalonSRX(4);
+    frontleft = new WPI_TalonSRX(4);
+    frontright = new WPI_TalonSRX(1);
     
     backleft.follow(frontleft);
     backright.follow(frontright);

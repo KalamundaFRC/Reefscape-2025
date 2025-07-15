@@ -7,6 +7,8 @@ package frc.robot;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Autos;
 import frc.robot.commands.ExampleCommand;
+import frc.robot.subsystems.Arm;
+import frc.robot.Constants.ArmConstants;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.INTAKE;
 import frc.robot.subsystems.jeffsdrivebase;
@@ -26,6 +28,7 @@ public class RobotContainer {
   private final INTAKE m_INTAKE = new INTAKE(); 
   private final jeffsdrivebase m_Jeffsdrivebase = new jeffsdrivebase();
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
+  private final Arm m_arm = new Arm();
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
   private final CommandXboxController m_driverController =
@@ -62,8 +65,12 @@ public class RobotContainer {
     m_driverController.leftTrigger().whileTrue(m_INTAKE.moveIntake(1.0));
 
 
+    m_driverController.a().whileTrue(m_arm.movearm(ArmConstants.ArmAngleScoring));
+    m_driverController.b().whileTrue(m_arm.movearm(ArmConstants.ArmAngleStowed));
+    m_driverController.y().whileTrue(m_arm.movearm(ArmConstants.ArmAngleGround));
 
-    m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
+
+
   }
 
   /**
