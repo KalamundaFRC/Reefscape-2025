@@ -24,7 +24,7 @@ public class Arm extends SubsystemBase{
     private WPI_VictorSPX ArmMotor2 = new WPI_VictorSPX(6);
     private DutyCycleEncoder ArmDutyCycleEncode = new DutyCycleEncoder(0);
     // private EncoderSim ArmEncoder = new EncoderSim(0);
-    private PIDController ArmPidCon = new PIDController(0.01, 0, 0);
+    private PIDController ArmPidCon = new PIDController(1.0, 0, 0);
     private double DoubleEncoderOutput = ArmDutyCycleEncode.get();
     public Arm(){
         ArmMotor2.follow(ArmMotor1);
@@ -48,14 +48,28 @@ public class Arm extends SubsystemBase{
         return run(
             () -> {
                 Double target = MathUtil.clamp(position,Constants.ArmConstants.ArmLowerBoundLimit,Constants.ArmConstants.ArmUpperBoundLimit);
-                Double result = MathUtil.clamp(ArmPidCon.calculate(ArmDutyCycleEncode.get(),position),-1*Constants.ArmConstants.ArmVelocityLimit,Constants.ArmConstants.ArmVelocityLimit);  
+                Double result = MathUtil.clamp(ArmPidCon.calculate(ArmDutyCycleEncode.get(),target),-1*Constants.ArmConstants.ArmVelocityLimit,Constants.ArmConstants.ArmVelocityLimit);  
                 ArmMotor1.set(result);
+            // },
+            // () -> {
+            //     ArmMotor1.set(0);
+            // 
             });
     }
-    public Command rawcontrol(){
+    public Command rawcontrol(double speed){
         return run(
             () -> {
-                ArmMotor1.set(1);
+                ArmMotor1.set(speed);
+            });
+    }
+
+    public Command BetterRaw(double speed){
+        return startEnd(
+            ()->{
+                ArmMotor1.set(speed);
+            }, 
+            ()->{
+                ArmMotor1.set(0);
             });
     }
     double time = 0;
@@ -65,6 +79,7 @@ public class Arm extends SubsystemBase{
         xPub.set(time);
         yPub.set(DoubleEncoderOutput);
         time += 0.05;
+        DoubleEncoderOutput = ArmDutyCycleEncode.get();
         System.out.println(DoubleEncoderOutput);
     }
 }

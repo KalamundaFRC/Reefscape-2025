@@ -64,8 +64,8 @@ public class RobotContainer {
 
     m_driverController.leftTrigger().whileTrue(m_INTAKE.moveIntake(1.0));
 
-
-    m_driverController.a().whileTrue(m_arm.movearm(ArmConstants.ArmAngleScoring));
+    m_driverController.x().whileTrue(m_arm.BetterRaw(-0.1));
+    m_driverController.a().onTrue(m_arm.movearm(ArmConstants.ArmAngleScoring));
     m_driverController.b().whileTrue(m_arm.movearm(ArmConstants.ArmAngleStowed));
     m_driverController.y().whileTrue(m_arm.movearm(ArmConstants.ArmAngleGround));
 
