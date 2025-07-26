@@ -30,8 +30,10 @@ public jeffsdrivebase(){
     frontleft = new WPI_TalonSRX(4);
     frontright = new WPI_TalonSRX(1);
     
+    frontright.setInverted(true);
     backleft.follow(frontleft);
     backright.follow(frontright);
+
 
     jeffbase = new DifferentialDrive(frontleft, frontright);
 

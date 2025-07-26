@@ -23,8 +23,8 @@ public final class Constants {
     public static final Double ArmAngleScoring = 0.4;
     public static final Double ArmAngleGround = 0.712;
 
-    public static final Double ArmLowerBoundLimit = 0.712;    
-    public static final Double ArmUpperBoundLimit = 0.245;
+    public static final Double ArmLowerBoundLimit = 0.245;    
+    public static final Double ArmUpperBoundLimit = 0.712;
     public static final Double ArmVelocityLimit = 0.1;
   }
   public static class OperatorConstants {
