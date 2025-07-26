@@ -10,19 +10,24 @@ public class INTAKE extends SubsystemBase {
     WPI_VictorSPX jeff;
     
     public INTAKE(){
-        jeff =  new WPI_VictorSPX(0);
+        jeff =  new WPI_VictorSPX(7);
     }
     public Command moveIntake(Double velocity){
-        return run(
+        return startEnd(
         () ->{
 
             jeff.set(velocity);
+
+        },
+        () ->{
+
+            jeff.set(0);
 
         });
             
         
     }
-    
+
 public void setIntake(double speed){
     jeff.set(speed);
 }

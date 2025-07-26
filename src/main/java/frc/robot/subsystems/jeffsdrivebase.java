@@ -31,6 +31,7 @@ public jeffsdrivebase(){
     frontright = new WPI_TalonSRX(1);
     
     frontright.setInverted(true);
+    backright.setInverted(true);
     backleft.follow(frontleft);
     backright.follow(frontright);
 
@@ -40,7 +41,7 @@ public jeffsdrivebase(){
     }
 public void worldconquerer(double forward, double rotate){
 
-    jeffbase.arcadeDrive(forward, rotate);
+    jeffbase.arcadeDrive(forward, -rotate);
 }
 
 } 

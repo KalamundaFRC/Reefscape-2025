@@ -19,13 +19,13 @@ import com.fasterxml.jackson.databind.ser.std.StdKeySerializers.Dynamic;
 
 public final class Constants {
   public static class ArmConstants {
-    public static final Double ArmAngleStowed = 0.25;
+    public static final Double ArmAngleStowed = 0.253;
     public static final Double ArmAngleScoring = 0.4;
-    public static final Double ArmAngleGround = 0.712;
+    public static final Double ArmAngleGround = 0.700;
 
     public static final Double ArmLowerBoundLimit = 0.245;    
     public static final Double ArmUpperBoundLimit = 0.712;
-    public static final Double ArmVelocityLimit = 0.1;
+    public static final Double ArmVelocityLimit = 1.0;
   }
   public static class OperatorConstants {
     public static final int kDriverControllerPort = 0;

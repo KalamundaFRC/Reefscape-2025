@@ -14,6 +14,7 @@ import frc.robot.subsystems.INTAKE;
 import frc.robot.subsystems.jeffsdrivebase;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
@@ -23,7 +24,7 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
  * periodic methods (other than the scheduler calls). Instead, the structure of the robot (including
  * subsystems, commands, and trigger mappings) should be declared here.
  */
-public class RobotContainer {
+public class RobotContainer extends SequentialCommandGroup {
   // The robot's subsystems and commands are defined here...
   private final INTAKE m_INTAKE = new INTAKE(); 
   private final jeffsdrivebase m_Jeffsdrivebase = new jeffsdrivebase();
@@ -62,12 +63,13 @@ public class RobotContainer {
         () -> m_Jeffsdrivebase.worldconquerer(m_driverController.getLeftY(), m_driverController.getRightX())
          , m_Jeffsdrivebase));
 
-    m_driverController.leftTrigger().whileTrue(m_INTAKE.moveIntake(1.0));
+    m_driverController.rightTrigger().whileTrue(m_INTAKE.moveIntake(0.25));
+    m_driverController.leftTrigger().whileTrue(m_INTAKE.moveIntake(-0.5));
 
     m_driverController.x().whileTrue(m_arm.BetterRaw(-0.1));
-    m_driverController.a().onTrue(m_arm.movearm(ArmConstants.ArmAngleScoring));
+    m_driverController.a().whileTrue(m_arm.movearm(ArmConstants.ArmAngleScoring).alongWith(m_INTAKE.moveIntake(-0.35)));
     m_driverController.b().whileTrue(m_arm.movearm(ArmConstants.ArmAngleStowed));
-    m_driverController.y().whileTrue(m_arm.movearm(ArmConstants.ArmAngleGround));
+    m_driverController.y().whileTrue(m_arm.movearm(ArmConstants.ArmAngleGround).alongWith(m_INTAKE.moveIntake(-0.5)));
 
 
 
