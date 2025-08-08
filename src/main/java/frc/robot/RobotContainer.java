@@ -63,16 +63,13 @@ public class RobotContainer extends SequentialCommandGroup {
         () -> m_Jeffsdrivebase.worldconquerer(m_driverController.getLeftY(), m_driverController.getRightX())
          , m_Jeffsdrivebase));
 
-    m_driverController.rightTrigger().whileTrue(m_INTAKE.moveIntake(0.25));
-    m_driverController.leftTrigger().whileTrue(m_INTAKE.moveIntake(-0.5));
+    m_arm.setDefaultCommand(
+      m_arm.movearm(ArmConstants.ArmAngleStowed)
+    );
 
-    m_driverController.x().whileTrue(m_arm.BetterRaw(-0.1));
-    m_driverController.a().whileTrue(m_arm.movearm(ArmConstants.ArmAngleScoring).alongWith(m_INTAKE.moveIntake(-0.35)));
-    m_driverController.b().whileTrue(m_arm.movearm(ArmConstants.ArmAngleStowed));
-    m_driverController.y().whileTrue(m_arm.movearm(ArmConstants.ArmAngleGround).alongWith(m_INTAKE.moveIntake(-0.5)));
-
-
-
+    m_driverController.rightBumper().whileTrue(m_arm.movearm(ArmConstants.ArmAngleScoring));
+    m_driverController.leftTrigger().whileTrue(m_arm.movearm(ArmConstants.ArmAngleGround).alongWith(m_INTAKE.moveIntake(0.5)));
+    m_driverController.rightTrigger().whileTrue(m_arm.movearm(ArmConstants.ArmAngleScoring).alongWith(m_INTAKE.moveIntake(-0.5)));
   }
 
   /**

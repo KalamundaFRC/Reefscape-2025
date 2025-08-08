@@ -81,6 +81,6 @@ public class Arm extends SubsystemBase{
         yPub.set(DoubleEncoderOutput);
         time += 0.05;
         DoubleEncoderOutput = ArmDutyCycleEncode.get();
-        System.out.println(DoubleEncoderOutput);
+        System.out.println("Arm Encoder " + DoubleEncoderOutput);
     }
 }
