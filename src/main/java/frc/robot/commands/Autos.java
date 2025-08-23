@@ -32,7 +32,7 @@ public final class Autos{
     jeffbase.jeffbasearcade(0, 0).withTimeout(0.5).andThen(
     jeffbase.jeffbasearcade(0.5, 0).withTimeout(0.25)).andThen(
     jeffbase.jeffbasearcade(0, 0).withTimeout(0.5)).andThen(
-    jeffbase.jeffbasearcade(-0.5, 0).withTimeout(1)).andThen(
+    jeffbase.jeffbasearcade(-0.5, 0).withTimeout(2)).andThen(
     jeffbase.jeffbasearcade(0, 0).withTimeout(0.5));
   }
 

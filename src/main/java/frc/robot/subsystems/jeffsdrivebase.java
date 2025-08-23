@@ -59,7 +59,6 @@ public jeffsdrivebase(){
 
     }
 public void worldconquerer(double forward, double rotate){
-
     jeffbase.arcadeDrive(forward, -rotate);
 }
 

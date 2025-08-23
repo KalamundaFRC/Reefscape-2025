@@ -35,7 +35,7 @@ public final class Constants {
   }
   public static class ClimbConstrants {
 
-    public static final Double ClimblowerBounds = -2.22;    
+    public static final Double ClimbLimit = 151.0;    
     public static final Double ClimbVelocityLimit = 0.8;
     public static final Double ClimbPosition = 1.0;
   }

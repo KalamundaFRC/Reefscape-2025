@@ -13,7 +13,7 @@ import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.INTAKE;
 import frc.robot.subsystems.jeffsdrivebase;
 import frc.robot.subsystems.Climb;
-import frc.robot.Constants.ClimbConstrants;
+// import frc.robot.Constants.ClimbConstrants;
 
 // import java.nio.file.ClosedFileSystemException;
 
@@ -25,6 +25,8 @@ import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+
+
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -52,10 +54,11 @@ public class RobotContainer extends SequentialCommandGroup {
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
-    // Configure the trigger bindings
+    // Addes a autochooser for matches
     autochooser = new SendableChooser<>();
     autochooser.addOption("TaxiScoreMid", a_taxiscoremid);
     autochooser.addOption("TaxiMid", a_taximid);
+    
     SmartDashboard.putData("autochooser",autochooser);
     configureBindings();
   }
@@ -78,19 +81,30 @@ public class RobotContainer extends SequentialCommandGroup {
     // cancelling on release.
     m_Jeffsdrivebase.setDefaultCommand(
       new RunCommand(
-
-        () -> m_Jeffsdrivebase.worldconquerer(m_driverController.getLeftY(), m_driverController.getRightX())
-         , m_Jeffsdrivebase));
-
+        //Drive base
+        () -> m_Jeffsdrivebase.worldconquerer(
+          m_driverController.getLeftY(),
+           m_driverController.getRightX()),
+            m_Jeffsdrivebase));
+    //Moves arm when no buttons pressed
     m_arm.setDefaultCommand(
       m_arm.movearm(ArmConstants.ArmAngleStowed)
     );
-
+    // *Arm Controls* //
     m_driverController.rightBumper().whileTrue(m_arm.movearm(ArmConstants.ArmAngleScoring));
     m_driverController.leftTrigger().whileTrue(m_arm.movearm(ArmConstants.ArmAngleGround).alongWith(m_INTAKE.moveIntake(.8)));
     m_driverController.rightTrigger().whileTrue(m_arm.movearm(ArmConstants.ArmAngleScoring).alongWith(m_INTAKE.moveIntake(-0.25)));
-    m_toaster.axisGreaterThan(0, 0.8).whileTrue(m_Climb.MoveClimberFancy()).whileTrue(m_arm.movearm(ArmConstants.ArmAngleScoring));
-    m_driverController.a().whileTrue(m_Climb.moveClimb(0.5)).whileTrue(m_arm.movearm(ArmConstants.ArmAngleScoring));
+    
+    // **CLimb stuff** //
+    //Toaster defrost
+    m_toaster.a().whileTrue(m_Climb.moveClimb(0.5));
+    m_toaster.a().onTrue(m_arm.movearm(ArmConstants.ArmAngleGround));
+    //Toaster Toast lever
+    m_toaster.axisGreaterThan(0, 0.67).whileTrue(m_Climb.moveClimb(0.5));
+    m_toaster.axisGreaterThan(0, 0.67).onTrue(m_arm.movearm(ArmConstants.ArmAngleGround));
+    //Xbox Controller A button
+    m_driverController.a().whileTrue(m_Climb.moveClimb(0.5));
+    m_driverController.a().onTrue(m_arm.movearm(ArmConstants.ArmAngleGround));
     
     }
 

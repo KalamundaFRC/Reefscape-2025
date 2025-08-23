@@ -76,11 +76,11 @@ public class Arm extends SubsystemBase{
     double time = 0;
     @Override
     public void periodic(){
-        // Publish values that are constantly increasing.
-        xPub.set(time);
-        yPub.set(DoubleEncoderOutput);
-        time += 0.05;
-        DoubleEncoderOutput = ArmDutyCycleEncode.get();
-        System.out.println("Arm Encoder " + DoubleEncoderOutput);
+        // // Publish values that are constantly increasing.
+        // xPub.set(time);
+        // yPub.set(DoubleEncoderOutput);
+        // time += 0.05;
+        // DoubleEncoderOutput = ArmDutyCycleEncode.get();
+        // System.out.println("Arm Encoder " + DoubleEncoderOutput);
     }
 }

@@ -30,7 +30,7 @@ public class Climb extends SubsystemBase {
     public Command MoveClimberFancy(){
         return runEnd(
         () ->{
-            Double target = MathUtil.clamp(ClimbConstrants.ClimbPosition,ClimbConstrants.ClimblowerBounds,1);
+            Double target = MathUtil.clamp(ClimbConstrants.ClimbPosition,ClimbConstrants.ClimbLimit,1);
             Double result = MathUtil.clamp(PIDLoop.calculate(Encoder.getPosition(),target),-1*ClimbConstrants.ClimbVelocityLimit,ClimbConstrants.ClimbVelocityLimit);
             climbmotor.set(result);
         },
@@ -40,9 +40,9 @@ public class Climb extends SubsystemBase {
     }
 
     public Command moveClimb(Double velocity){
-        return startEnd(
+        return runEnd(
         () ->{
-            if (Encoder.getPosition()>=0.0){
+            if (Encoder.getPosition()<=ClimbConstrants.ClimbLimit){
                 climbmotor.set(velocity);
             } else {
                 climbmotor.set(0);
@@ -60,9 +60,9 @@ public class Climb extends SubsystemBase {
     }
     @Override
     public void periodic(){
-        // Publish values that are constantly increasing.
-        double DoubleEncoderOutput;
-        DoubleEncoderOutput = Encoder.getPosition();
-        System.out.println("Climb Encoder " + DoubleEncoderOutput);
+        // // Publish values that are constantly increasing.
+        // double DoubleEncoderOutput;
+        // DoubleEncoderOutput = Encoder.getPosition();
+        // System.out.println("Climb Encoder " + DoubleEncoderOutput);
     }
     }
