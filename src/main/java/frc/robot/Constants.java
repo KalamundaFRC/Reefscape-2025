@@ -4,7 +4,7 @@
 
 package frc.robot;
 
-import com.fasterxml.jackson.databind.ser.std.StdKeySerializers.Dynamic;
+// import com.fasterxml.jackson.databind.ser.std.StdKeySerializers.Dynamic;
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
@@ -19,6 +19,8 @@ import com.fasterxml.jackson.databind.ser.std.StdKeySerializers.Dynamic;
 
 public final class Constants {
   public static class ArmConstants {
+    
+
     public static final Double ArmAngleStowed = 0.253;
     public static final Double ArmAngleScoring = 0.45;
     public static final Double ArmAngleGround = 0.675;
@@ -29,5 +31,12 @@ public final class Constants {
   }
   public static class OperatorConstants {
     public static final int kDriverControllerPort = 0;
+    public static final int kToasterControllerPort = 1;
+  }
+  public static class ClimbConstrants {
+
+    public static final Double ClimblowerBounds = -2.22;    
+    public static final Double ClimbVelocityLimit = 0.8;
+    public static final Double ClimbPosition = 1.0;
   }
 }

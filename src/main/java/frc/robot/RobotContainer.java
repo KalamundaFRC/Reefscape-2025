@@ -12,6 +12,14 @@ import frc.robot.Constants.ArmConstants;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.INTAKE;
 import frc.robot.subsystems.jeffsdrivebase;
+import frc.robot.subsystems.Climb;
+import frc.robot.Constants.ClimbConstrants;
+
+// import java.nio.file.ClosedFileSystemException;
+
+// import edu.wpi.first.math.trajectory.constraint.CentripetalAccelerationConstraint;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
@@ -28,16 +36,27 @@ public class RobotContainer extends SequentialCommandGroup {
   // The robot's subsystems and commands are defined here...
   private final INTAKE m_INTAKE = new INTAKE(); 
   private final jeffsdrivebase m_Jeffsdrivebase = new jeffsdrivebase();
+  private final Climb m_Climb = new Climb();
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
   private final Arm m_arm = new Arm();
+  private static SendableChooser<Command> autochooser;
+  
+  Command a_taxiscoremid = Autos.TaxiScore(m_Jeffsdrivebase, m_arm, m_INTAKE);
+  Command a_taximid = Autos.Taxi(m_Jeffsdrivebase);
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
   private final CommandXboxController m_driverController =
       new CommandXboxController(OperatorConstants.kDriverControllerPort);
+  private final CommandXboxController m_toaster =
+      new CommandXboxController(OperatorConstants.kToasterControllerPort);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the trigger bindings
+    autochooser = new SendableChooser<>();
+    autochooser.addOption("TaxiScoreMid", a_taxiscoremid);
+    autochooser.addOption("TaxiMid", a_taximid);
+    SmartDashboard.putData("autochooser",autochooser);
     configureBindings();
   }
 
@@ -68,9 +87,12 @@ public class RobotContainer extends SequentialCommandGroup {
     );
 
     m_driverController.rightBumper().whileTrue(m_arm.movearm(ArmConstants.ArmAngleScoring));
-    m_driverController.leftTrigger().whileTrue(m_arm.movearm(ArmConstants.ArmAngleGround).alongWith(m_INTAKE.moveIntake(0.5)));
-    m_driverController.rightTrigger().whileTrue(m_arm.movearm(ArmConstants.ArmAngleScoring).alongWith(m_INTAKE.moveIntake(-0.5)));
-  }
+    m_driverController.leftTrigger().whileTrue(m_arm.movearm(ArmConstants.ArmAngleGround).alongWith(m_INTAKE.moveIntake(.8)));
+    m_driverController.rightTrigger().whileTrue(m_arm.movearm(ArmConstants.ArmAngleScoring).alongWith(m_INTAKE.moveIntake(-0.25)));
+    m_toaster.axisGreaterThan(0, 0.8).whileTrue(m_Climb.MoveClimberFancy()).whileTrue(m_arm.movearm(ArmConstants.ArmAngleScoring));
+    m_driverController.a().whileTrue(m_Climb.moveClimb(0.5)).whileTrue(m_arm.movearm(ArmConstants.ArmAngleScoring));
+    
+    }
 
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
@@ -79,6 +101,7 @@ public class RobotContainer extends SequentialCommandGroup {
    */
   public Command getAutonomousCommand() {
     // An example command will be run in autonomous
-    return Autos.exampleAuto(m_exampleSubsystem);
+    // return Autos.TaxiScore(m_Jeffsdrivebase,m_arm,m_INTAKE);
+    return autochooser.getSelected();
   }
 }
