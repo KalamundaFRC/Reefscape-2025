@@ -22,7 +22,7 @@ public class Arm extends SubsystemBase{
 
     private WPI_VictorSPX ArmMotor1 = new WPI_VictorSPX(5);
     private WPI_VictorSPX ArmMotor2 = new WPI_VictorSPX(6);
-    private DutyCycleEncoder ArmDutyCycleEncode = new DutyCycleEncoder(0);
+    private DutyCycleEncoder ArmDutyCycleEncode = new DutyCycleEncoder(1);
     // private EncoderSim ArmEncoder = new EncoderSim(0);
     private PIDController ArmPidCon = new PIDController(5.0, 0, 0);
     private double DoubleEncoderOutput = ArmDutyCycleEncode.get();

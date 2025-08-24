@@ -46,6 +46,8 @@ public class RobotContainer extends SequentialCommandGroup {
   Command a_taxiscoremid = Autos.TaxiScore(m_Jeffsdrivebase, m_arm, m_INTAKE);
   Command a_taximid = Autos.Taxi(m_Jeffsdrivebase);
 
+  
+
   // Replace with CommandPS4Controller or CommandJoystick if needed
   private final CommandXboxController m_driverController =
       new CommandXboxController(OperatorConstants.kDriverControllerPort);
@@ -94,6 +96,8 @@ public class RobotContainer extends SequentialCommandGroup {
     m_driverController.rightBumper().whileTrue(m_arm.movearm(ArmConstants.ArmAngleScoring));
     m_driverController.leftTrigger().whileTrue(m_arm.movearm(ArmConstants.ArmAngleGround).alongWith(m_INTAKE.moveIntake(.8)));
     m_driverController.rightTrigger().whileTrue(m_arm.movearm(ArmConstants.ArmAngleScoring).alongWith(m_INTAKE.moveIntake(-0.25)));
+
+    
     
     // **CLimb stuff** //
     //Toaster defrost
@@ -105,7 +109,17 @@ public class RobotContainer extends SequentialCommandGroup {
     //Xbox Controller A button
     m_driverController.a().whileTrue(m_Climb.moveClimb(0.5));
     m_driverController.a().onTrue(m_arm.movearm(ArmConstants.ArmAngleGround));
+
+    //Reverse Climb
+    m_driverController.x().whileTrue(m_Climb.moveClimb(-0.5));
+    m_driverController.x().onTrue(m_arm.movearm(ArmConstants.ArmAngleGround));
     
+    // m_driverController.y().onTrue(m_INTAKE.ledstatechange());
+    // if (m_driverController.get()){
+
+    // }
+
+
     }
 
   /**
